@@ -17,29 +17,19 @@ PROMPT = """
     - Ensure the output is clean and contains only human names.
     - Do not provide any explanations.
 
-    EXAMPLE
-    ```
-    Olivia Brown
-    Liam Johnson
-    Noah Williams
-    Emma Smith
-    ```
-
     INPUT
     TEXT: {input_text}
 """
 
 MODEL = "gemma2"
-# MODEL = "phi3.5"
-# MODEL = "llama3.1"
 
 MODEL_OPTIONS = {
     # defined in https://github.com/ollama/ollama/blob/main/docs/modelfile.md
     'num_ctx': 2048,        # default is 2048
     'num_predict': 256,     # default is 128
-    'temperature': 0.0,     # default is 0.8
-    'top_k': 10,            # default is 40
-    'top_p': 0.3,           # default is 0.9
+    'temperature': 0.1,     # default is 0.8
+    'top_k': 5,             # default is 40
+    'top_p': 0.1,           # default is 0.9
     'repeat_penalty': 2.0,  # default is 1.1
     'seed': 17,             # default is 0
     'stop': ['<|eot_id|>']
@@ -48,8 +38,8 @@ MODEL_OPTIONS = {
 def parse_text(text):
     for input_text in text:
         print(f"input text: {input_text}")
-        prompt = PROMPT.replace("{input_text}", input_text)
-        # print(prompt)
+        prompt = PROMPT.format(input_text=input_text)
+        # print(f"complete prompt: {prompt}")
 
         res = ollama.generate(MODEL, prompt=prompt, stream=False, options=MODEL_OPTIONS, keep_alive="1h")
         # print("Response: " + str(res))
@@ -108,7 +98,8 @@ if __name__ == "__main__":
                     # read text by sentence
                     else:
                         # TODO. sentences without the last character (? / . / !). has to be added
-                        sentences = re.split(r' *[\.\?!][\'"\)\]]* *', page.get_text())
+                        # sentences = re.split(r' *[\.\?!][\'"\)\]]* *', page.get_text())
+                        sentences = re.findall(r'([^.!?]*[.!?])', page.get_text())
 
                         total_sentences_to_read = 10
                         for sentence in sentences:
@@ -121,9 +112,9 @@ if __name__ == "__main__":
                             if words_counter <= 2:
                                 continue
 
-                            print(f"Sentence has {words_counter} words.")
+                            # print(f"Sentence has {words_counter} words.")
                             sentence = " ".join(words)
-                            print(sentence)
+                            # print(sentence)
 
                             total_sentences_to_read -= 1
                             if total_sentences_to_read < 0:
