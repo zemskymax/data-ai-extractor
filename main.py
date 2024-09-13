@@ -32,7 +32,7 @@ MODEL_OPTIONS = {
     'top_p': 0.1,           # default is 0.9
     'repeat_penalty': 2.0,  # default is 1.1
     'seed': 17,             # default is 0
-    'stop': ['<|eot_id|>']
+    'stop': ['<|end_of_turn|>']
 }
 
 def parse_text(text):
