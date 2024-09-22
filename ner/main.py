@@ -1,6 +1,8 @@
 import json
+import os
 import re
 import random
+import time
 from vllm import LLM, SamplingParams
 from names import *
 
@@ -10,7 +12,15 @@ LLM_MODEL = "neuralmagic/Mistral-7B-Instruct-v0.3-GPTQ-4bit"
 NUM_GPUs = 1
 
 
-def create_json_prompt_for_synthetic_data(**kwargs):
+def save_data_to_file(data, full_file_path):
+    """Saves the processed data to a file in a JSON format."""
+    with open(full_file_path, 'w') as f:
+        json.dump(data, f)
+
+##----------------------------------------##
+
+def create_prompt_for_synthetic_data_generation(**kwargs):
+    """Creates a prompt that the input parameters. This prompt will be used to generate the synthetic data."""
     # Building the initial part of the prompt
     prompt = """
         **Objective:**
@@ -110,7 +120,9 @@ def generate_from_prompts(prompt, llm, sampling_params):
     return all_outs, extract_entities(all_outs)
 
 
-NUM_SAMPLES = 3
+OUTPUT_FOLDER = "output_data"
+OUTPUT_FILE_SUFFIX = ".json"
+NUM_SAMPLES = 1
 if __name__ == "__main__":
     llm = LLM(model=LLM_MODEL, gpu_memory_utilization=0.8, max_model_len=1500, tensor_parallel_size=NUM_GPUs, seed=17, quantization="GPTQ")
 
@@ -121,16 +133,20 @@ if __name__ == "__main__":
         name = random.choice(FIRST_NAMES)
         surname = random.choice(SECOND_NAMES)
 
-        prompt = create_json_prompt_for_synthetic_data(language="english",
+        prompt = create_prompt_for_synthetic_data_generation(language="english",
                                                        types_of_text="casual sentence",
                                                        name=name,
                                                        surname=surname)
 
         output, processed_output = generate_from_prompts(prompt, llm, sampling_params)
-        all_outputs.append(output)
+        all_outputs.append(processed_output[0])
 
         print(f"Final response: {output}")
-        print(f"Processed output {processed_output}")
+        print(f"Processed output {processed_output[0]}")
 
-    # TODO. save to file
+    full_path = os.path.realpath(__file__)
+    dir_name = os.path.dirname(full_path)
+    file_name = time.strftime("%Y%m%d-%H%M%S")
+    save_data_to_file(all_outputs, dir_name + "/" + OUTPUT_FOLDER + "/" + file_name + OUTPUT_FILE_SUFFIX)
+
     print("Done")
