@@ -6,6 +6,7 @@ import time
 from vllm import LLM, SamplingParams
 from names import *
 
+
 # LLM_MODEL = "mistralai/Mistral-7B-Instruct-v0.3"
 # LLM_MODEL = "solidrust/Mistral-7B-Instruct-v0.3-AWQ"
 LLM_MODEL = "neuralmagic/Mistral-7B-Instruct-v0.3-GPTQ-4bit"
@@ -120,9 +121,9 @@ def generate_from_prompts(prompt, llm, sampling_params):
     return all_outs, extract_entities(all_outs)
 
 
-OUTPUT_FOLDER = "output_data"
+OUTPUT_FOLDER = "data"
 OUTPUT_FILE_SUFFIX = ".json"
-NUM_SAMPLES = 1
+NUM_SAMPLES = 5
 if __name__ == "__main__":
     llm = LLM(model=LLM_MODEL, gpu_memory_utilization=0.8, max_model_len=1500, tensor_parallel_size=NUM_GPUs, seed=17, quantization="GPTQ")
 
