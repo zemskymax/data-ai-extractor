@@ -15,3 +15,9 @@ This project leverages a Large Language Model (LLM) named Gemma to extract speci
 ## Usage
 - Prepare the PDF File: Ensure that your book is available in PDF format (in the input folder) 
 - Run the main.py: Execute the script to parse the PDF and extract the desired content.
+    -- Run the fine tuned Gliner model
+    python3 main.py -pm ner -rm sentence -nt tuned
+    -- Run the base Gliner model
+    python3 main.py -pm ner -rm sentence -nt base
+    -- Run the LLM 
+    python3 main.py -pm llm -rm sentence -nt none

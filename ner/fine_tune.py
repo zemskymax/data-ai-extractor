@@ -2,13 +2,15 @@ import json
 import os
 import random
 import torch
-from gliner import GLiNERConfig, GLiNER
+from gliner import GLiNER
 from gliner.training import Trainer, TrainingArguments
-from gliner.data_processing.collator import DataCollatorWithPadding, DataCollator
+from gliner.data_processing.collator import DataCollator
 
 
+# global parameters
 INPUT_FOLDER = "data"
-INPUT_FILE_NAME = "20240922-222908.json"
+INPUT_FILE_NAME = "20240925-215236.json"
+MODEL = "urchade/gliner_medium-v2.1"
 
 os.environ["TOKENIZERS_PARALLELISM"] = "true"
 
@@ -39,7 +41,7 @@ if __name__ == "__main__":
     device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
 
     print(f"Using {device}...")
-    model = GLiNER.from_pretrained("urchade/gliner_small")
+    model = GLiNER.from_pretrained(MODEL)
     model.to(device)
 
     data_collator = DataCollator(model.config, data_processor=model.data_processor, prepare_labels=True)
@@ -64,10 +66,10 @@ if __name__ == "__main__":
         focal_loss_gamma=2,
         num_train_epochs=num_epochs,
         evaluation_strategy="steps",
-        save_steps = 100,
+        save_steps=100,
         save_total_limit=10,
-        dataloader_num_workers = 0,
-        use_cpu = False,
+        dataloader_num_workers=0,
+        use_cpu=False,
         report_to="none",
         )
 
@@ -82,5 +84,3 @@ if __name__ == "__main__":
 
     print("--Handle Training--")
     trainer.train()
-
-

@@ -20,6 +20,12 @@ COUNTRIES = [
     "Sierra Leone", "Equatorial Guinea", "Swaziland", "Congo (Kinshasa)", "Congo (Brazzaville)"
 ]
 
+TEXT_TYPES = [
+    "Passive Voice", "Casual sentence", "In the past", "Do you know", "A character appears in the middle or end of the sentence, emphasizing the relative clause"
+    "Have you meet", "Inversion for Emphasis", "I have heard about", "Sentence begins with a adverbial phrase, the character appears in the middle of the sentence"
+
+]
+
 FIRST_NAMES = [
     "James", "John", "Robert", "Michael", "William", "Matteo", "Richard", "Joseph", "Charles", "Lorenzo", 
     "Christopher", "Aurora", "Matthew", "Anthony", "Donald", "Paul", "Mark", "Steven", "Andrew", "Kenneth", 
@@ -30,7 +36,8 @@ FIRST_NAMES = [
     "Manuel", "Alejandro", "Diego", "Miguel", "David", "Javier", "Felix", "Rafael", "Fernando", "Luis", 
     "Daniel", "Beatrice", "Eduardo", "Alberto", "Roberto", "Pablo", "Sergio", "Jorge", "Oscar", "Ricardo", 
     "Ángel", "Santiago", "Emilio", "Domingo", "Andrés", "Muhammad", "Ahmed", "Ali", "Omar", "Hassan", 
-    "Ibrahim", "Max", "Karim", "Hussein", "Mahmoud" ]
+    "Ibrahim", "Max", "Karim", "Hussein", "Mahmoud" 
+]
 
 SECOND_NAMES = [
     "Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto", "Nakamura", "Kobayashi", 
@@ -43,7 +50,8 @@ SECOND_NAMES = [
     "Ivanov", "Smirnov", "Kuznetsov", "Popov", "Sokolov", "Vasiliev", "Petrov", "Sidorov", "Mikhailov", 
     "Nikolaev", "Wang", "Li", "Zhang", "Liu", "Chen", "Yang", "Huang", "Zhao", "Wu", "Zhou", "Kenyatta", 
     "Otieno", "Mwangi", "Njoroge", "Kiplagat", "Ndlovu", "Zulu", "Dlamini", "Mthembu", "Sithole", "Diop", 
-    "Faye", "Mohamed", "Farouk", "Amin", "Youssef", "Salah", "Gaber", "Shawky", "Tawfik", "El Sayed" ]
+    "Faye", "Mohamed", "Farouk", "Amin", "Youssef", "Salah", "Gaber", "Shawky", "Tawfik", "El Sayed" 
+]
 
 def find_duplicates(arr):
     return set([x for x in arr if arr.count(x) > 1])
